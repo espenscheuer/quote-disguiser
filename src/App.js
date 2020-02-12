@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import ContentEditable from "react-contenteditable";
 import './App.css';
 
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [text, setText] = useState("<p>type here </p>")
+
+  function handleChange(evt) {
+    var s = String(evt.target.value)
+    var a = s.split(" ")
+    var a1 = a.map(str=>{
+      if(str.includes("c")) {
+        var color = "red"
+      } else {
+        color = "black"
+      }
+      return `<span style="color:${color};">${str}</span>`
+    })
+    console.log(String(a1))
+
+    setText(String(a1));
+  }
+
+  return(
+  <ContentEditable
+        html={text} // innerHTML of the editable div
+        disabled={false} // use true to disable edition
+        onChange={handleChange} // handle innerHTML change
+      />
+  )
 }
 
 export default App;
