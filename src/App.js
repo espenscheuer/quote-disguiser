@@ -6,7 +6,7 @@ function App() {
   const [text, setText] = useState("")
   const [textContent, setTextContent] = useState("");
   const [original, setOriginal] = useState('')
-  const[found, setFound] ] = useState('')
+  const [found, setFound] = useState('')
 
 
 
