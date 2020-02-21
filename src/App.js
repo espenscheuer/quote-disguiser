@@ -6,6 +6,7 @@ function App() {
   const [text, setText] = useState("")
   const [textContent, setTextContent] = useState("");
   const [original, setOriginal] = useState('')
+  const[found, setFound] ] = useState('')
 
 
 
@@ -20,7 +21,7 @@ function App() {
   async function apiRequest() {
     let r = await fetch("/api/index.py?original=" + escape(original.trim()) + '&text=' + escape(text.trim()))
     r = await r.text()
-    console.log(r)
+    setFound(r)
   }
 
   useEffect(() => {
@@ -80,6 +81,8 @@ function App() {
       {original && <div>{original}</div>}
       <div> Highlighted Quote:</div>
       <div className="text-content">{textContent}</div>
+      {found && <div> Google Result: </div>}
+      {found && <div className = 'google-result'>{found}</div>}
     </div>
   )
 }
