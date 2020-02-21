@@ -20,7 +20,11 @@ class handler(BaseHTTPRequestHandler):
 			self.send_response(200)
 			self.send_header('Content-type', 'text/plain')
 			self.end_headers()
-			self.wfile.write(str(check(params['original'][0], params['text'][0])).encode())
+      result = check(params['original'][0], params['text'][0])
+      if(result):
+			  self.wfile.write(str(result).encode())
+      else:
+        self.wfile.write('No results found all good!'.encode())
 		else:
 			self.send_response(400)
 			self.send_header('Content-type', 'text/plain')
