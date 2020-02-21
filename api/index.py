@@ -19,6 +19,9 @@ class handler(BaseHTTPRequestHandler):
   def do_POST(self):
     content_length = int(self.headers.get('Content-Length'))
     data = self.rfile.read(content_length)
+    self.send_response(200)
+    self.send_header('Content-type', 'text/plain')
+    self.end_headers()
     self.wfile.write(str(data).encode())
     # url_item = urllib.parse.urlparse(self.path)
     # params = urllib.parse.parse_qs(url_item.query)
