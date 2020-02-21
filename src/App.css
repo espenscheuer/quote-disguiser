@@ -10,7 +10,19 @@
 
 
 .input {
-  background: lightblue;
+  background: white;
+  display:flex;
+  flex-direction: row;
   color: white;
   font-size: 40px;
+}
+
+.text-input {
+  height:20vh;
+  width:30vw;
+  border: 1px solid black;
+}
+
+.button {
+  height: 5vh;
 }

@@ -1,11 +1,30 @@
 from http.server import BaseHTTPRequestHandler
-from datetime import datetime
-
+from bs4 import BeautifulSoup
+import urllib
+import requests
+def check(original, text):
+text = urllib.parse.quote(text)
+url = 'https://google.com/search?q={}'.format(text)
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+for g in soup.find_all(class_='ZINbbc xpd O9g5cc uUPGi'):
+  here = original in g.text
+  if here:
+    return(g.text)
+return ''
 class handler(BaseHTTPRequestHandler):
-
-  def do_GET(self):
+def do_GET(self):
+  url_item = urllib.parse.urlparse(str(self.address_string))
+  params = urllib.parse.parse_qs(url_item.query)
+  if (params and 'original' in params and 'text' in params):
     self.send_response(200)
     self.send_header('Content-type', 'text/plain')
     self.end_headers()
-    self.wfile.write(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')).encode())
-    return
+    self.wfile.write(str(check(params.original, params.text)).encode())
+  else:
+    self.send_response(400)
+    self.send_header('Content-type', 'text/plain')
+    self.end_headers()
+    self.wfile.write(str('Please provide original and text').encode())
+  return
+
