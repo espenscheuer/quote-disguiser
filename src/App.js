@@ -18,7 +18,7 @@ function App() {
   };
 
   async function apiRequest() {
-    let r = await fetch("/api/index.py?original=" + escape(original.trim()) + '?text=' + escape(text.trim()))
+    let r = await fetch("/api/index.py?original=" + escape(original.trim()) + '&text=' + escape(text.trim()))
     r = await r.text()
     console.log(r)
   }
