@@ -17,8 +17,9 @@ def check(original, text):
 
 class handler(BaseHTTPRequestHandler):
   def do_POST(self):
-    data = self.rfile
-    self.wfile.write(str(data).encode())
+     content_length = int(self.headers['Content-Length'])
+    data = self.rfile.read(content_length)
+    self.wfile.write(str(data.decode('utf-8')).encode())
     # url_item = urllib.parse.urlparse(self.path)
     # params = urllib.parse.parse_qs(url_item.query)
     # if (params and 'original' in params and 'text' in params):
