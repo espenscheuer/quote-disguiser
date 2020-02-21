@@ -19,7 +19,11 @@ function App() {
   };
 
   async function apiRequest() {
-    let r = await fetch("/api/index.py?original=" + escape(original.trim()) + '&text=' + escape(text.trim()))
+    let r = await fetch("/api/index.py", {
+        method : "POST",
+        headers : {'Content-Type' : 'application/json'}, 
+        body : {"original" : original, "text" : text}
+      })
     r = await r.text()
     setFound(r)
   }
