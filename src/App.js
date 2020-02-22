@@ -24,8 +24,7 @@ function App() {
         headers : {'Content-Type' : 'application/json'}, 
         body : {"original" : original, "text" : text}
       })
-    r = await r.text()
-    setFound(r)
+    r.text().then()(value => {setFound(value)})
   }
 
   useEffect(() => {
