@@ -39,17 +39,14 @@ function App() {
         two = two.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
 
         if(two in twogram) {
+          styles['textDecoration'] = 'underline'
           if(twogram[two] > 5000) {
-            styles['textDecoration'] = 'underline'
             styles['textDecorationColor'] =  'gray'
           } else if(twogram[two] > 1000) {
-            styles['textDecoration'] = 'underline'
             styles['textDecorationColor'] =  'yellow'
           } else if(twogram[two] > 500) {
-            styles['textDecoration'] = 'underline'
             styles['textDecorationColor'] =  'orange'
           } else {
-            styles['textDecoration'] = 'underline'
             styles['textDecorationColor'] =  'red'
           }
         }
