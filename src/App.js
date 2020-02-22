@@ -22,9 +22,9 @@ function App() {
     let r = await fetch("/api/index.py", {
         method : "POST",
         headers : {'Content-Type' : 'application/json'}, 
-        body : {"original" : original, "text" : text}
+        body : JSON.stringify({"original" : original, "text" : text})
       })
-    r.text().then()(value => {setFound(value)})
+    r.text().then(value => {setFound(value)})
   }
 
   useEffect(() => {
