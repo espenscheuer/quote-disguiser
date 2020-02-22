@@ -30,7 +30,7 @@ class handler(BaseHTTPRequestHandler):
       self.end_headers()
       self.wfile.write(str('Please provide original and text').encode())
     return
-    
+
   def do_POST(self):
     content_length = int(self.headers.get('Content-Length'))
     raw_data = self.rfile.read(content_length)
@@ -39,7 +39,11 @@ class handler(BaseHTTPRequestHandler):
       self.send_response(200)
       self.send_header('Content-type', 'text/plain')
       self.end_headers()
-      self.wfile.write(str(check(data['original'], data['text'])).encode())
+      result = check(data['original'], data['text'])
+      if result:
+        self.wfile.write(str(result).encode())
+      else:
+        self.wfile.write("Nothing Found you're good!".encode())
     else:
       self.send_response(400)
       self.send_header('Content-type', 'text/plain')
