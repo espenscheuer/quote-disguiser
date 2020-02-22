@@ -5,7 +5,7 @@ import requests
 import json
 def check(original, text):
   text = urllib.parse.quote(text)
-  url = 'https://google.com/search?q={}'.format(text)
+  url = 'https://google.com/search?q="{}"'.format(text)
   response = requests.get(url)
   soup = BeautifulSoup(response.text, 'html.parser')
   for g in soup.find_all(class_='ZINbbc xpd O9g5cc uUPGi'):
