@@ -36,6 +36,8 @@ function App() {
       if(index !== 0) {
         let two = words[index - 1] + '_' + word
         two = two.toLowerCase()
+        two = two.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
+
         if(two in twogram) {
           if(twogram[two] > 5000) {
             styles['textDecoration'] = 'underline'
@@ -53,6 +55,7 @@ function App() {
         }
       }
       let test = word.toLowerCase();
+      test = test.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
       if (test in onegram) {
         if(onegram[test] >= 10000) {
           styles['color'] = 'gray';  
