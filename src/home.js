@@ -37,7 +37,7 @@ function Home() {
 			if (value !== 'No results found') {
 				setFound(
 					<>
-						<blockquote>{(value + " on the first page")}</blockquote>
+						<blockquote>{value}</blockquote>
 						<iframe
 							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 							title="Search results"
@@ -47,7 +47,7 @@ function Home() {
 			} else {
 				setFound(
 					<>
-						<blockquote>{("Quote Found: " + value)}</blockquote>
+						<blockquote>{value}</blockquote>
 						<iframe
 							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 							title="Search results"
