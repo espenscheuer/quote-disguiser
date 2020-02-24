@@ -21,6 +21,8 @@ function Home() {
 	};
 
 	const apiRequest = async () => {
+        console.log(original)
+        console.log(text)
 		setFound('');
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -34,7 +36,7 @@ function Home() {
         });
 		response.text().then(value => {
             console.log(value)
-			if (value !== 'No results found') {
+			if (value !== "Nothing Found you're good!") {
 				setFound(
 					<>
 						<blockquote>{value}</blockquote>
@@ -123,7 +125,7 @@ function Home() {
             </button>
           </div>
         )}
-        {found && quote && (
+        {textContent.length > 0 && found && quote && (
           <div className="found">
             <h3>Google Result</h3>
             {found}
