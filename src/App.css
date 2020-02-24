@@ -1,28 +1,96 @@
-.App {
-  text-align: center;
+
+* {
+	box-sizing: border-box;
+	width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html {
+	font-size: 62.5%;
 }
 
+body {
+	font-size: 1.6rem;
+	margin: 0;
+}
+
+textarea {
+	background-color: #eee;
+	border: 1px solid #ddd;
+	border-radius: .5em;
+	font: inherit;
+	height: 10rem;
+	margin: 0 0 1em;
+	max-width: 540px;
+	padding: 1em;
+
+	&:focus {
+		box-shadow:
+			0 0 0 .25em #fff,
+			0 0 0 .5em #ddd;
+		outline: none;
+	}
+}
+
+button {
+	@include breakpoint(sm) {
+		max-width: 20rem;
+	}
+
+	appearance: none;
+	background-color: #1467ff;
+	border: 1px solid darken(#1467ff, 10);
+	border-radius: .5em;
+	color: #fff;
+	font: inherit;
+	font-weight: bold;
+	padding: .5em 1em;
+	width: 100%;
+}
+
+blockquote {
+	background-color: #f9f9f9;
+	border-left: .5rem solid #ccc;
+	margin: 1.5em 0;
+	padding: 1em;
+	quotes: "\201C""\201D""\2018""\2019";
+	width: calc(100% - 1rem);
+
+	p {
+		display: inline;
+	}
+}
+
+iframe {
+	border: 1px solid #ccc;
+	height: 40rem;
+	width: 100%;
+}
+
+.content {
+	@include breakpoint(md) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	display: grid;
+	grid-template-columns: 1fr;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 960px;
+	padding: 2em 0;
+	width: calc(100% - 4em);
+}
 
 .input {
-  background: white;
-  display:flex;
-  flex-direction: row;
-  color: white;
-  font-size: 40px;
+	@include breakpoint(md) {
+		grid-column: auto / span 2;
+	}
+
+	display: flex;
+	flex-direction: column;
 }
 
-.text-input {
-  height:20vh;
-  width:30vw;
-  border: 1px solid black;
-}
-
-.button {
-  height: 5vh;
+.found {
+	@include breakpoint(md) {
+		grid-column: auto / span 2;
+	}
 }

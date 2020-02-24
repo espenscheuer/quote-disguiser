@@ -1,93 +1,184 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-
+import Helmet from 'react-helmet';
 
 function App() {
-  const [text, setText] = useState("")
-  const [textContent, setTextContent] = useState("");
-  const [original, setOriginal] = useState('')
-  const [found, setFound] = useState('')
+	const [text, setText] = useState('');
+	const [original, setOriginal] = useState('');
+	const [found, setFound] = useState('');
+	const [textContent, setTextContent] = useState('');
+	const [version, setVersion] = useState(0);
+	const [styles, setStyles] = useState({});
 
+	const onegram = require('./1_gram_json.json');
+	const twogram = require('./2_gram_json.json');
 
+	const updateText = e => {
+		setText(e.target.value);
+		if ('' === e.target.value) {
+			setStyles({});
+			setOriginal('');
+			setFound('');
+		}
+	};
 
-  let onegram = (require('./1_gram_json.json'))
-  let twogram = (require('./2_gram_json.json'))
+	const apiRequest = async () => {
+		setOriginal(text);
+		setFound('');
+		const response = await fetch('/api/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				"original" : '"' + original + '"',
+				"text" : '"' + text + '"',
+			}),
+		});
+		response.text().then(value => {
+			if (value !== 'No results found') {
+				setFound(
+					<>
+						<blockquote>{value}</blockquote>
+						<iframe
+							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
+							title="Search results"
+						/>
+					</>
+				);
+			} else {
+				setFound(
+					<>
+						<blockquote>{value}</blockquote>
+						<iframe
+							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
+							title="Search results"
+						/>
+					</>
+				);
+			}
+		});
+	};
 
+	useEffect(() => {
+		let generatedHTML = [];
 
-  function updateText(e) {
-	  setText(e.target.value);
-  };
+		const words = text.split(' ');
 
-  async function apiRequest() {
-    let r = await fetch("/api/index.py", {
-        method : "POST",
-        headers : {'Content-Type' : 'application/json'}, 
-        body : JSON.stringify({"original" : original, "text" : text})
-      })
-    r.text().then(value => {setFound(value)})
-  }
+		words.forEach((word, index) => {
+			const id = `word-${version}-${index}`;
 
-  useEffect(() => {
-    let generatedHTML = [];
-    let words = text.split(' ');
-    words.forEach((word, index) => {
-      const id = `word-${index}`;
-      let styles = {};
-      if(index !== 0) {
-        let two = words[index - 1] + '_' + word
-        two = two.toLowerCase()
-        two = two.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
+			const wordStyles = {};
+			let includePrevious = false;
 
-        if(two in twogram) {
-          styles['textDecoration'] = 'underline'
-          if(twogram[two] > 5000) {
-            styles['textDecorationColor'] =  'gray'
-          } else if(twogram[two] > 1000) {
-            styles['textDecorationColor'] =  'yellow'
-          } else if(twogram[two] > 500) {
-            styles['textDecorationColor'] =  'orange'
-          } else {
-            styles['textDecorationColor'] =  'red'
-          }
-        }
-      }
-      let test = word.toLowerCase();
-      test = test.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
-      if (test in onegram) {
-        if(onegram[test] >= 10000) {
-          styles['color'] = 'gray';  
-        } else if(onegram[test] >= 5000) {
-          styles['color'] = 'yellow';
-        } else if(onegram[test] >= 1000) {
-          styles['color'] = 'orange'
-        } else {
-          styles['color'] = 'red'
-        }
-      }
-      generatedHTML.push(<><span key={id} style={styles}>{word}</span>{' '}</>);
-    });
-    setTextContent(generatedHTML);
-  }, [text]);
+			if (0 !== index) {
+				const two = (words[index - 1] + '_' + word).toLowerCase();
+				if (two in twogram) {
+					let newTextDecorationColor = 'red';
+					if (twogram[two] > 5000) {
+						newTextDecorationColor = 'gray';
+					} else if (twogram[two] > 1000) {
+						newTextDecorationColor = 'yellow';
+					} else if (twogram[two] > 500) {
+						newTextDecorationColor = 'orange';
+					}
+					wordStyles['textDecoration'] = 'underline';
+					wordStyles['textDecorationColor'] = newTextDecorationColor;
+					includePrevious = true;
+				}
+			}
 
-  return (
-    <div>
-      <div className = "input">
-      <textarea className= "text-input" value={text} onChange={updateText}></textarea>
-      <button className = "button" onClick={() => {setOriginal(text)}} type="primary"> 
-      Set Quote
-      </button>
-      <button className = "button" onClick={apiRequest} type="primary"> 
-      Check Quote
-      </button>
-      </div>
-      <div> Original Quote:</div>
-      {original && <div>{original}</div>}
-      <div> Highlighted Quote:</div>
-      <div className="text-content">{textContent}</div>
-      {found && <div> Google Result: </div>}
-      {found && <div className = 'google-result'>{found}</div>}
-    </div>
-  )
+			const test = word.toLowerCase();
+			if (test in onegram) {
+				let newColor = 'red';
+				if (onegram[test] >= 10000) {
+					newColor = 'gray';
+				} else if (onegram[test] >= 5000) {
+					newColor = 'yellow';
+				} else if (onegram[test] >= 1000) {
+					newColor = 'orange';
+				}
+				wordStyles['color'] = newColor;
+			}
+
+			generatedHTML.push(
+				<span key={id} style={styles[index]}>
+					{word}{' '}
+				</span>
+			);
+
+			if (includePrevious) {
+				setStyles({
+					...styles,
+					[index]: {
+						// ...styles[index],
+						...wordStyles,
+					},
+					[index - 1]: {
+						// ...styles[index],
+						...wordStyles,
+					},
+				});
+			} else {
+				setStyles({
+					...styles,
+					[index]: {
+						// ...styles[index],
+						...wordStyles,
+					},
+				});
+			}
+		});
+
+		setVersion(version + 1);
+		setTextContent(generatedHTML);
+	}, [text]);
+
+	// useEffect(() => {
+	// 	textUpdates.forEach(update => {
+	// 		textContent[update.index].props.style = {
+	// 			...textContent[update.index].props.style,
+	// 			...update.styles,
+	// 		};
+	// 	});
+	// }, [textUpdates]);
+
+	return (
+		<div className="content">
+			<Helmet>
+				<html lang="en" />
+				<title>Differential Privacy Checker</title>
+				<meta name="robots" content="noindex, nofollow" />
+			</Helmet>
+			<div className="input">
+				<textarea className="text-input" value={text} onChange={updateText} />
+				{/* <button className="button" onClick={() => setOriginal(text)}>
+					Set Quote
+				</button> */}
+				<button className="button" onClick={apiRequest}>
+					Check Quote
+				</button>
+			</div>
+			{textContent.length > 0 && (
+				<div>
+					<h2>Highlighted Quote</h2>
+					<blockquote>{textContent}</blockquote>
+				</div>
+			)}
+			{original && (
+				<div>
+					<h2>Original Quote</h2>
+					<blockquote>{original}</blockquote>
+				</div>
+			)}
+			{found && (
+				<div className="found">
+					<h2>Google Result</h2>
+					{found}
+				</div>
+			)}
+		</div>
+	);
 }
 
 export default App;
