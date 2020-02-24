@@ -33,7 +33,7 @@ function Home() {
 				"text" : '"' + text + '"',
 			}),
         });
-        console.log(response.text)
+        console.log(response.text())
 		response.text().then(value => {
 			if (value !== 'No results found') {
 				setFound(
