@@ -33,9 +33,8 @@ function Home() {
 				"text" : '"' + text + '"',
 			}),
         });
-        let text = await response.text()
-        console.log(text)
 		response.text().then(value => {
+            console.log(value)
 			if (value !== 'No results found') {
 				setFound(
 					<>
