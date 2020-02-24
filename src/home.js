@@ -34,6 +34,7 @@ function Home() {
         });
 		response.text().then(value => {
             console.log(value)
+            console.log(typeof(value))
 			if (value !== "Nothing Found you're good!") {
 				setFound(
 					<>
