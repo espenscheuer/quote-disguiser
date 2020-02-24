@@ -22,19 +22,18 @@ textarea {
 	margin: 0 0 1em;
 	max-width: 540px;
 	padding: 1em;
+}
 
-	&:focus {
+textarea:focus{
 		box-shadow:
 			0 0 0 .25em #fff,
 			0 0 0 .5em #ddd;
 		outline: none;
-	}
+
 }
 
 button {
-	@include breakpoint(sm) {
-		max-width: 20rem;
-	}
+	max-width: 20rem;
 
 	appearance: none;
 	background-color: #1467ff;
@@ -81,10 +80,6 @@ iframe {
 }
 
 .input {
-	@include breakpoint(md) {
-		grid-column: auto / span 2;
-	}
-
 	display: flex;
 	flex-direction: column;
 }

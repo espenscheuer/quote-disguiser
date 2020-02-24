@@ -1,22 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import Helmet from 'react-helmet';
+import { Button } from 'antd';
+
 
 function App() {
-	const [text, setText] = useState('');
-	const [original, setOriginal] = useState('');
+  const [text, setText] = useState('');
+  const [original, setOriginal] = useState('');
+  const [quote, setQuote] = useState(false)
 	const [found, setFound] = useState('');
 	const [textContent, setTextContent] = useState('');
-	const [version, setVersion] = useState(0);
-	const [styles, setStyles] = useState({});
+  const [btnText, setBtnText] = useState('Set Quote')
 
 	const onegram = require('./1_gram_json.json');
-	const twogram = require('./2_gram_json.json');
 
 	const updateText = e => {
 		setText(e.target.value);
 		if ('' === e.target.value) {
-			setStyles({});
 			setOriginal('');
 			setFound('');
 		}
@@ -39,7 +39,7 @@ function App() {
 			if (value !== 'No results found') {
 				setFound(
 					<>
-						<blockquote>{value}</blockquote>
+						<blockquote>{(value + " on the first page")}</blockquote>
 						<iframe
 							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 							title="Search results"
@@ -49,7 +49,7 @@ function App() {
 			} else {
 				setFound(
 					<>
-						<blockquote>{value}</blockquote>
+						<blockquote>{("Quote Found: " + value)}</blockquote>
 						<iframe
 							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 							title="Search results"
@@ -58,90 +58,31 @@ function App() {
 				);
 			}
 		});
-	};
-
-	useEffect(() => {
-		let generatedHTML = [];
-
-		const words = text.split(' ');
-
-		words.forEach((word, index) => {
-			const id = `word-${version}-${index}`;
-
-			const wordStyles = {};
-			let includePrevious = false;
-
-			if (0 !== index) {
-				const two = (words[index - 1] + '_' + word).toLowerCase();
-				if (two in twogram) {
-					let newTextDecorationColor = 'red';
-					if (twogram[two] > 5000) {
-						newTextDecorationColor = 'gray';
-					} else if (twogram[two] > 1000) {
-						newTextDecorationColor = 'yellow';
-					} else if (twogram[two] > 500) {
-						newTextDecorationColor = 'orange';
-					}
-					wordStyles['textDecoration'] = 'underline';
-					wordStyles['textDecorationColor'] = newTextDecorationColor;
-					includePrevious = true;
-				}
-			}
-
-			const test = word.toLowerCase();
-			if (test in onegram) {
-				let newColor = 'red';
-				if (onegram[test] >= 10000) {
-					newColor = 'gray';
-				} else if (onegram[test] >= 5000) {
-					newColor = 'yellow';
-				} else if (onegram[test] >= 1000) {
-					newColor = 'orange';
-				}
-				wordStyles['color'] = newColor;
-			}
-
-			generatedHTML.push(
-				<span key={id} style={styles[index]}>
-					{word}{' '}
-				</span>
-			);
-
-			if (includePrevious) {
-				setStyles({
-					...styles,
-					[index]: {
-						// ...styles[index],
-						...wordStyles,
-					},
-					[index - 1]: {
-						// ...styles[index],
-						...wordStyles,
-					},
-				});
-			} else {
-				setStyles({
-					...styles,
-					[index]: {
-						// ...styles[index],
-						...wordStyles,
-					},
-				});
-			}
-		});
-
-		setVersion(version + 1);
-		setTextContent(generatedHTML);
-	}, [text]);
-
-	// useEffect(() => {
-	// 	textUpdates.forEach(update => {
-	// 		textContent[update.index].props.style = {
-	// 			...textContent[update.index].props.style,
-	// 			...update.styles,
-	// 		};
-	// 	});
-	// }, [textUpdates]);
+  };
+  
+  useEffect(() => {
+    let generatedHTML = [];
+    let words = text.split(' ');
+    words.forEach((word, index) => {
+      const id = `word-${index}`;
+      let styles = {};
+      let test = word.toLowerCase();
+      test = test.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
+      if (test in onegram) {
+        if(onegram[test] >= 10000) {
+          styles['color'] = 'gray';  
+        } else if(onegram[test] >= 5000) {
+          styles['color'] = '	#ff9a00';
+        } else if(onegram[test] >= 1000) {
+          styles['color'] = '#ff5a00'
+        } else {
+          styles['color'] = '#ff0000'
+        }
+      }
+      generatedHTML.push(<><span key={id} style={styles}>{word}</span>{' '}</>);
+    });
+    setTextContent(generatedHTML);
+  }, [text]);
 
 	return (
 		<div className="content">
@@ -150,30 +91,50 @@ function App() {
 				<title>Differential Privacy Checker</title>
 				<meta name="robots" content="noindex, nofollow" />
 			</Helmet>
+      <h1>
+        Differential Privacy
+      </h1>
+      <p>
+        Enter the quote you would like to obfuscate
+      </p>
+      
 			<div className="input">
-				<textarea className="text-input" value={text} onChange={updateText} />
-				{/* <button className="button" onClick={() => setOriginal(text)}>
-					Set Quote
-				</button> */}
-				<button className="button" onClick={apiRequest}>
-					Check Quote
+      {!quote && <textarea className="text-input" value={original} onChange={(e) => {setOriginal(e.target.value); setText(e.target.value)}} />}
+      {quote && <blockquote>{original}</blockquote>}
+        <button type = "primary"
+          onClick={(e) => {
+            setText(original) 
+            if(!quote) {
+              setBtnText("Edit Quote")
+              
+              e.target.style.backgroundColor = "lightGray"
+            } else {
+              setBtnText("Set Quote")
+              e.target.style.backgroundColor = '#1467ff'
+            }
+            
+            setQuote(!quote)}}>
+					{btnText}
 				</button>
 			</div>
-			{textContent.length > 0 && (
+      {text && quote && (
 				<div>
-					<h2>Highlighted Quote</h2>
+					<p>Now edit the quote, prioritizing the most unique words (in red) and check to see if the original quote appears in a google search</p>
+					<textarea className="text-input" value={text} onChange={updateText} />
+				</div>
+			)}
+			{(textContent.length > 0 && text && quote) && (
+				<div>
+					<h3>Highlighted Quote</h3>
 					<blockquote>{textContent}</blockquote>
+          <button className="button" onClick={apiRequest}>
+					Check Quote
+				  </button>
 				</div>
 			)}
-			{original && (
-				<div>
-					<h2>Original Quote</h2>
-					<blockquote>{original}</blockquote>
-				</div>
-			)}
-			{found && (
+			{found && quote && (
 				<div className="found">
-					<h2>Google Result</h2>
+					<h3>Google Result</h3>
 					{found}
 				</div>
 			)}
