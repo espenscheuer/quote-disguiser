@@ -66,9 +66,10 @@ function App() {
     words.forEach((word, index) => {
       const id = `word-${index}`;
       let styles = {};
+      let included = original.includes(word)
       let test = word.toLowerCase();
       test = test.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
-      if (test in onegram) {
+      if (test in onegram && included) {
         if(onegram[test] >= 10000) {
           styles['color'] = 'gray';  
         } else if(onegram[test] >= 5000) {
@@ -95,7 +96,7 @@ function App() {
         Differential Privacy
       </h1>
       <p>
-        Enter the quote you would like to obfuscate
+        Enter the quote you would like to obfuscate.
       </p>
       
 			<div className="input">
@@ -119,13 +120,14 @@ function App() {
 			</div>
       {text && quote && (
 				<div>
-					<p>Now edit the quote, prioritizing the most unique words (in red) and check to see if the original quote appears in a google search</p>
+					<p>Now edit the quote, prioritizing the most unique words (in red) and check to see if the original quote appears in a google search.</p>
 					<textarea className="text-input" value={text} onChange={updateText} />
 				</div>
 			)}
 			{(textContent.length > 0 && text && quote) && (
 				<div>
 					<h3>Highlighted Quote</h3>
+          <p>Text highlighting is based on word uniqueness, something you can read more about in the info page.</p>
 					<blockquote>{textContent}</blockquote>
           <button className="button" onClick={apiRequest}>
 					Check Quote
