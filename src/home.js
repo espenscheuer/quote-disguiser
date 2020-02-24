@@ -21,7 +21,6 @@ function Home() {
 	};
 
 	const apiRequest = async () => {
-		setOriginal(text);
 		setFound('');
 		const response = await fetch('/api/', {
 			method: 'POST',
