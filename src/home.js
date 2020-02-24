@@ -32,7 +32,8 @@ function Home() {
 				"original" : '"' + original + '"',
 				"text" : '"' + text + '"',
 			}),
-		});
+        });
+        console.log(response.text)
 		response.text().then(value => {
 			if (value !== 'No results found') {
 				setFound(
