@@ -21,8 +21,6 @@ function Home() {
 	};
 
 	const apiRequest = async () => {
-        console.log(original)
-        console.log(text)
 		setFound('');
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -90,7 +88,7 @@ function Home() {
           Enter the quote you would like to obfuscate.
         </p>
         
-        <div className="input">
+        <div className="input"> 
         {!quote && <textarea className="text-input" value={original} onChange={(e) => {setOriginal(e.target.value); setText(e.target.value)}} />}
         {quote && <blockquote>{original}</blockquote>}
           <button type = "primary"
