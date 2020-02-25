@@ -12,10 +12,19 @@ function Home() {
 
 	const onegram = require('./1_gram_json.json');
 
+  const changeBtn = () => {
+    setText(original)
+		if(!quote) {
+      setBtnText("Edit Quote")
+    } else {
+      setBtnText("Set Quote")
+    }
+    setQuote(!quote)
+	};
+
 	const updateText = e => {
 		setText(e.target.value);
 		if ('' === e.target.value) {
-			setOriginal('');
 			setFound('');
 		}
 	};
@@ -88,33 +97,32 @@ function Home() {
         <p>
           Enter the quote you would like to obfuscate.
         </p>
-        
         <div className="input"> 
-        {!quote && <textarea className="text-input" value={original} onChange={(e) => {setOriginal(e.target.value); setText(e.target.value)}} />}
+        {!quote && <textarea className="text-input" value={original} 
+        onChange={(e) => {setOriginal(e.target.value); setText(e.target.value)}}
+        onKeyPress={e => {
+          if(e.key==='Enter'){
+            changeBtn()
+          }
+        }} />}
         {quote && <blockquote>{original}</blockquote>}
-          <button type = "primary"
-            onClick={(e) => {
-              setText(original) 
-              if(!quote) {
-                setBtnText("Edit Quote")
-                
-                e.target.style.backgroundColor = "lightGray"
-              } else {
-                setBtnText("Set Quote")
-                e.target.style.backgroundColor = '#1467ff'
-              }
-              
-              setQuote(!quote)}}>
+          <button type = "primary" pressed = {btnText}
+            onClick={changeBtn}>
             {btnText}
           </button>
         </div>
-        {text && quote && (
+      {quote && (
           <div>
             <p>Now edit the quote, prioritizing the most unique words (in red) and check to see if the original quote appears in a google search.</p>
-            <textarea className="text-input" value={text} onChange={updateText} />
+            <textarea className="text-input" value={text} onChange={updateText} 
+            onKeyPress={e => {
+              if(e.key==='Enter'){
+                apiRequest()
+              }
+            }}/>
           </div>
         )}
-        {(textContent.length > 0 && text && quote) && (
+        {quote && (
           <div>
             <h3>Highlighted Quote</h3>
             <p>Text highlighting is based on word uniqueness, something you can read more about in the info page.</p>
@@ -124,7 +132,7 @@ function Home() {
             </button>
           </div>
         )}
-        {textContent.length > 0 && found && quote && (
+        {found && quote && (
           <div className="found">
             <h3>Google Result</h3>
             {found}

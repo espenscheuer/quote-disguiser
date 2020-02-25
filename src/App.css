@@ -9,7 +9,7 @@ html {
 }
 
 .header-link {
-  color:black;
+  color:ublack;
 }
 
 
@@ -43,6 +43,20 @@ button {
 
 	appearance: none;
 	background-color: #1467ff;
+	border: 1px solid darken(#1467ff, 10);
+	border-radius: .5em;
+	color: #fff;
+	font: inherit;
+	font-weight: bold;
+	padding: .5em 1em;
+	width: 100%;
+}
+
+button[pressed = "Edit Quote"] {
+	max-width: 20rem;
+
+	appearance: none;
+	background-color: lightgray;
 	border: 1px solid darken(#1467ff, 10);
 	border-radius: .5em;
 	color: #fff;

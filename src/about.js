@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 function About(props) {
     
     return (
-        <div>g
+        <div>
             <div>
                 about text
             </div>

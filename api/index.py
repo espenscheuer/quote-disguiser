@@ -22,6 +22,7 @@ class handler(BaseHTTPRequestHandler):
       self.send_response(200)
       self.send_header('Content-type', 'text/plain')
       self.end_headers()
+      print(str(check(params['original'][0], params['text'][0])))
       self.wfile.write(str(check(params['original'][0], params['text'][0])).encode())
     else:
       self.send_response(400)
