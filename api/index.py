@@ -36,9 +36,11 @@ class handler(BaseHTTPRequestHandler):
 		raw_data = self.rfile.read(content_length)
 		data = json.loads(raw_data.decode())
 		if (data and 'original' in data and 'text' in data):
+      print("recieved")
 			self.send_response(200)
 			self.send_header('Content-type', 'text/plain')
 			self.end_headers()
+      print(str(check(data['original'], data['text'])))
 			self.wfile.write(str(check(data['original'], data['text'])).encode())
 		else:
 			self.send_response(400)

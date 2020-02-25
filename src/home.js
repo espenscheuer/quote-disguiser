@@ -37,8 +37,8 @@ function Home() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				original,
-				text,
+				"original" : '"' + original + '"',
+				"text" : '"' + text + '"',
 			}),
 		});
 		response.text().then(value => {
@@ -47,7 +47,7 @@ function Home() {
 					<>
 						<blockquote>{value}</blockquote>
 						<iframe
-							src={`https://google.com/search?igu=1&q=${escape(text)}`}
+							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 							title="Search results"
 						/>
 					</>
@@ -55,7 +55,7 @@ function Home() {
 			} else {
 				setFound(
 					<iframe
-						src={`https://google.com/search?igu=1&q=${escape(text)}`}
+						src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 						title="Search results"
 					/>
 				);
