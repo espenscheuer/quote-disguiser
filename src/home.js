@@ -54,7 +54,6 @@ function Home() {
 				);
 			} else {
 				setFound(
-          <blockquote>{value}</blockquote>
 					<iframe
 						src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 						title="Search results"
