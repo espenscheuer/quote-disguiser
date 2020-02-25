@@ -42,7 +42,6 @@ function Home() {
 			}),
 		});
 		response.text().then(value => {
-			if (value !== 'No results found') {
 				setFound(
 					<>
 						<blockquote>{value}</blockquote>
@@ -52,15 +51,6 @@ function Home() {
 						/>
 					</>
 				);
-			} else {
-				setFound(
-          <blockquote>{value}</blockquote>
-					<iframe
-						src={`https://google.com/search?igu=1&q="${escape(text)}"`}
-						title="Search results"
-					/>
-				);
-			}
 		});
 	};
   
