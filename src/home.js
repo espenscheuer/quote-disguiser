@@ -37,8 +37,8 @@ function Home() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				"original" : '"' + original + '"',
-				"text" : '"' + text + '"',
+				original
+				text,
 			}),
 		});
 		response.text().then(value => {
