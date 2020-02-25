@@ -37,36 +37,31 @@ function Home() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				"original" : '"' + original + '"',
-				"text" : '"' + text + '"',
+				original,
+				text,
 			}),
-        });
+		});
 		response.text().then(value => {
-            console.log(value)
-            console.log(typeof(value))
-			if (value !== "Nothing Found you're good!") {
+			if (value !== 'No results found') {
 				setFound(
 					<>
 						<blockquote>{value}</blockquote>
 						<iframe
-							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
+							src={`https://google.com/search?igu=1&q=${escape(text)}`}
 							title="Search results"
 						/>
 					</>
 				);
 			} else {
 				setFound(
-					<>
-						<blockquote>{value}</blockquote>
-						<iframe
-							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
-							title="Search results"
-						/>
-					</>
+					<iframe
+						src={`https://google.com/search?igu=1&q=${escape(text)}`}
+						title="Search results"
+					/>
 				);
 			}
 		});
-  };
+	};
   
   useEffect(() => {
     let generatedHTML = [];
