@@ -9,6 +9,7 @@ function Home() {
     const [found, setFound] = useState('');
     const [textContent, setTextContent] = useState('');
     const [btnText, setBtnText] = useState('Set Quote')
+    const[google, setGoogle] = useState(false)
 
 	const onegram = require('./1_gram_json.json');
 
@@ -43,6 +44,7 @@ function Home() {
 		});
 		response.text().then(value => {
 			if (value !== 'No results found') {
+        setGoogle(true)
 				setFound(
 					<>
 						<blockquote>{value}</blockquote>
@@ -53,6 +55,7 @@ function Home() {
 					</>
 				);
 			} else {
+        setGoogle(false)
 				setFound(
 					<iframe
 						src={`https://google.com/search?igu=1&q="${escape(text)}"`}
@@ -130,6 +133,8 @@ function Home() {
         {found && quote && (
           <div className="found">
             <h3>Google Result</h3>
+            {google && <p>The original quote appeared on the first page of a google search</p>}
+            {!google && <p>The original quote did not appear on the first page of a google search</p> }
             {found}
           </div>
         )}
