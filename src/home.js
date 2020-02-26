@@ -46,7 +46,7 @@ function Home() {
 			if (value !== 'No results found') {
 				setFound(
 					<>
-						<blockquote>{("Found: "+ value)}</blockquote>
+						<blockquote>{value}</blockquote>
 						<iframe
 							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 							title="Search results"
