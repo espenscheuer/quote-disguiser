@@ -5,16 +5,16 @@ import requests
 import json
 
 def check(original, text):
-	text = urllib.parse.quote(text)
+  text = urllib.parse.quote(text)
   text = '/"' + text + '/"'
-	url = 'https://google.com/search?q={}'.format(text)
-	response = requests.get(url)
-	soup = BeautifulSoup(response.text, 'html.parser')
-	for g in soup.find_all(class_='ZINbbc xpd O9g5cc uUPGi'):
-		here = original.lower() in g.text.lower()
-		if here:
-			return(g.text)
-	return 'No results found'
+  url = 'https://google.com/search?q={}'.format(text)
+  response = requests.get(url)
+  soup = BeautifulSoup(response.text, 'html.parser')
+  for g in soup.find_all(class_='ZINbbc xpd O9g5cc uUPGi'):
+    here = original.lower() in g.text.lower()
+    if here:
+      return(g.text)
+  return 'No results found'
 
 class handler(BaseHTTPRequestHandler):
   def do_GET(self):
