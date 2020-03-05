@@ -6,6 +6,7 @@ import json
 
 def check(original, text):
 	text = urllib.parse.quote(text)
+  text = '/"' + text + '/"'
 	url = 'https://google.com/search?q={}'.format(text)
 	response = requests.get(url)
 	soup = BeautifulSoup(response.text, 'html.parser')
