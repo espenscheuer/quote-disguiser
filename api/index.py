@@ -10,7 +10,7 @@ def check(original, text):
 	response = requests.get(url)
 	soup = BeautifulSoup(response.text, 'html.parser')
 	for g in soup.find_all(class_='ZINbbc xpd O9g5cc uUPGi'):
-		here = original in g.text
+		here = original.lower() in g.text.lower()
 		if here:
 			return(g.text)
 	return 'No results found'
