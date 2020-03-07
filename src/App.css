@@ -9,7 +9,7 @@ html {
 }
 
 .header-link {
-  color:ublack;
+  color: black;
 }
 
 
@@ -74,9 +74,11 @@ blockquote {
 	quotes: "\201C""\201D""\2018""\2019";
 	width: calc(100% - 1rem);
 
-	p {
-		display: inline;
-	}
+	
+}
+
+blockquote p {
+	display: inline;
 }
 
 iframe {
@@ -86,9 +88,9 @@ iframe {
 }
 
 .content {
-	@include breakpoint(md) {
+	/* @include breakpoint(md) {
 		grid-template-columns: repeat(2, 1fr);
-	}
+	} */
 
 	display: grid;
 	grid-template-columns: 1fr;
@@ -104,8 +106,45 @@ iframe {
 	flex-direction: column;
 }
 
-.found {
+/* .found {
 	@include breakpoint(md) {
 		grid-column: auto / span 2;
 	}
+} */
+
+
+.text-gray {
+	color: gray;
+}
+
+.u-gray {
+	text-decoration: underline;
+	text-decoration-color: gray;
+}
+
+.text-orange {
+	color: #ff9a00;
+}
+
+.u-orange {
+	text-decoration: underline;
+	text-decoration-color: #ff9a00;
+}
+
+.text-dark-orange {
+	color: #ff5a00;
+}
+
+.u-dark-orange {
+	text-decoration: underline;
+	text-decoration-color: #ff5a00;
+}
+
+.text-red {
+	color: red;
+}
+
+.u-red {
+	text-decoration: underline;
+	text-decoration-color: red;
 }

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import { Link} from 'react-router-dom'
+import uniqid from 'uniqid';
 
 function Home() {
     const [text, setText] = useState('');
@@ -10,8 +11,11 @@ function Home() {
     const [textContent, setTextContent] = useState('');
     const [btnText, setBtnText] = useState('Set Quote')
     const[google, setGoogle] = useState(false)
+    const [version, setVersion] = useState(0);
+    const [updates, setUpdates] = useState(null);
 
-	const onegram = require('./1_gram_json.json');
+  const onegram = require('./1_gram_json.json');
+  const twogram = require('./2_gram_json.json');
 
   const changeBtn = () => {
     setText(original)
@@ -64,32 +68,116 @@ function Home() {
 				);
 			}
 		});
-	};
+  };
+  
+  const textClasses = {
+    gray: 'text-gray',
+    orange: 'text-orange',
+    darkOrange: 'text-dark-orange',
+    red: 'text-red',
+
+    uGray: 'u-gray',
+    uOrange: 'u-orange',
+    uDarkOrange: 'u-dark-orange',
+    uRed: 'u-red',
+  };
   
   useEffect(() => {
     let generatedHTML = [];
+    let updatingIndexes = [];
     let words = text.split(' ');
     words.forEach((word, index) => {
-      const id = `word-${index}`;
-      let styles = {};
+      // const id = `word-${version}-${index}`;
+      const id = uniqid();
+
+      let textColorClass = '';
+      let textUnderlineClass = '';
+
       let included = original.includes(word)
+      included = true;
       let test = word.toLowerCase();
       test = test.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
+
       if (test in onegram && included) {
+        console.log('in onegram', test)
+
+
         if(onegram[test] >= 10000) {
-          styles['color'] = 'gray';  
+          console.log('Gray', test);
+          textColorClass = textClasses.gray;
         } else if(onegram[test] >= 5000) {
-          styles['color'] = '	#ff9a00';
+          console.log('Orange', test);
+          textColorClass = textClasses.orange;
         } else if(onegram[test] >= 1000) {
-          styles['color'] = '#ff5a00'
+          console.log('Dark orange', test);
+          textColorClass = textClasses.darkOrange;
         } else {
-          styles['color'] = '#ff0000'
+          console.log('Red', test);
+          textColorClass = textClasses.red;
         }
       }
-      generatedHTML.push(<><span key={id} style={styles}>{word}</span>{' '}</>);
+
+      if (index !== 0) {
+        const two = (words[index - 1].replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ") + '_' + test).toLowerCase();
+        if (two in twogram) {
+
+          const indexToUpdate = index - 1;
+          
+
+          console.log('Twogram', two);
+
+          if (twogram[two] > 5000) {
+            textUnderlineClass = textClasses.uGray;
+          } else if (twogram[two] > 1000) {
+            textUnderlineClass = textClasses.uOrange;
+          } else if (twogram[two] > 500) {
+            textUnderlineClass = textClasses.uDarkOrange;
+          } else {
+            textUnderlineClass = textClasses.uRed;
+          }
+
+          updatingIndexes.push({
+            index: indexToUpdate,
+            textUnderlineClass,
+          });
+
+        }
+      }
+
+      const classNames = `${textColorClass} ${textUnderlineClass}`;
+
+      console.log(test, classNames);
+
+      generatedHTML.push(<span key={id} className={classNames}>{word} </span>);
     });
+    setVersion(version+1);
     setTextContent(generatedHTML);
+    setUpdates(updatingIndexes.length > 0 ? updatingIndexes : null);
   }, [text]);
+
+  useEffect(() => {
+    console.log('Content', textContent);
+    console.log('Updates', updates);
+
+    if (updates && updates.length > 0) {
+
+      let spans = React.Children.toArray(textContent);
+      console.log('Spans', spans)
+
+      console.log(textContent);
+
+      updates.forEach(updateIndex => {
+        const newSpan = React.cloneElement(spans[updateIndex.index], { className: `${spans[updateIndex.index].props.className} ${updateIndex.textUnderlineClass}`});
+        spans[updateIndex.index] = newSpan;
+      });
+
+      setTextContent(spans);
+    }
+
+    setUpdates(null);
+
+  }, [textContent, updates]);
+
     return (
         <div>
         <p>
