@@ -47,6 +47,7 @@ function Home() {
     ReactGA.event({
       category: "Check Text",
       action: "User Checked Text",
+      value: Math.abs(original.length - text.length)
     });
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -110,7 +111,8 @@ function Home() {
   useEffect(() => {
     ReactGA.event({
       category: "Edit Text",
-      action: "User Edited Text",
+      action: "User Edited Text",,
+      value: 
     });
     let generatedHTML = [];
     let updatingIndexes = [];
