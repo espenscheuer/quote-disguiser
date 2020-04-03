@@ -111,8 +111,7 @@ function Home() {
   useEffect(() => {
     ReactGA.event({
       category: "Edit Text",
-      action: "User Edited Text",,
-      value: 
+      action: "User Edited Text"
     });
     let generatedHTML = [];
     let updatingIndexes = [];
