@@ -23,7 +23,7 @@ function Home() {
 
   const changeBtn = () => {
     ReactGA.event({
-      category: "Set Orignal",
+      category: "Set Original",
       action: "User Set Original Text",
     });
     setText(original)
