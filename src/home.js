@@ -43,7 +43,11 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
-		setFound('');
+    setFound('');
+    ReactGA.event({
+      category: "Check Text",
+      action: "User Checked Text",
+    });
 		const response = await fetch('/api/', {
 			method: 'POST',
 			headers: {
@@ -104,6 +108,10 @@ function Home() {
   
   
   useEffect(() => {
+    ReactGA.event({
+      category: "Edit Text",
+      action: "User Edited Text",
+    });
     let generatedHTML = [];
     let updatingIndexes = [];
     let words = text.split(' ');
