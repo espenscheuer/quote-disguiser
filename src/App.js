@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import Home from './home.js'
 import About from './about.js'
 
-import { BrowserRouter, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 
 
 function App() {

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import { Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import uniqid from 'uniqid';
 
 function Home() {
@@ -10,9 +10,10 @@ function Home() {
     const [found, setFound] = useState('');
     const [textContent, setTextContent] = useState('');
     const [btnText, setBtnText] = useState('Set Quote')
-    const[google, setGoogle] = useState(false)
+    const [google, setGoogle] = useState(false)
     const [version, setVersion] = useState(0);
     const [updates, setUpdates] = useState(null);
+    const [label, setLabel] = useState('');
 
   const onegram = require('./1_gram_json.json');
   const twogram = require('./2_gram_json.json');
@@ -34,7 +35,7 @@ function Home() {
 		}
 	};
 
-	const apiRequest = async () => {
+	const apiRequest = async() => {
 		setFound('');
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -81,13 +82,25 @@ function Home() {
     uDarkOrange: 'u-dark-orange',
     uRed: 'u-red',
   };
+
+  const createLabel = (word, classNames) => {
+    if(classNames.includes(textClasses.gray)){
+      setLabel(word + ": common")
+    } else if(classNames.includes(textClasses.orange)){
+      setLabel(word + ": uncommon")
+    } else if(classNames.includes(textClasses.darkOrange)){
+      setLabel(word + ": rare")
+    } else if(classNames.includes(textClasses.red)){
+      setLabel(word + ": very rare")
+    }
+  };
+  
   
   useEffect(() => {
     let generatedHTML = [];
     let updatingIndexes = [];
     let words = text.split(' ');
     words.forEach((word, index) => {
-      // const id = `word-${version}-${index}`;
       const id = uniqid();
 
       let textColorClass = '';
@@ -99,20 +112,14 @@ function Home() {
       test = test.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
 
       if (test in onegram && included) {
-        console.log('in onegram', test)
-
 
         if(onegram[test] >= 10000) {
-          console.log('Gray', test);
           textColorClass = textClasses.gray;
         } else if(onegram[test] >= 5000) {
-          console.log('Orange', test);
           textColorClass = textClasses.orange;
         } else if(onegram[test] >= 1000) {
-          console.log('Dark orange', test);
           textColorClass = textClasses.darkOrange;
         } else {
-          console.log('Red', test);
           textColorClass = textClasses.red;
         }
       }
@@ -123,9 +130,6 @@ function Home() {
 
           const indexToUpdate = index - 1;
           
-
-          console.log('Twogram', two);
-
           if (twogram[two] > 5000) {
             textUnderlineClass = textClasses.uGray;
           } else if (twogram[two] > 1000) {
@@ -145,10 +149,7 @@ function Home() {
       }
 
       const classNames = `${textColorClass} ${textUnderlineClass}`;
-
-      console.log(test, classNames);
-
-      generatedHTML.push(<span key={id} className={classNames}>{word} </span>);
+      generatedHTML.push(<span key={id} onMouseEnter={() => {createLabel(word, classNames)}} className={classNames}>{word} </span>);
     });
     setVersion(version+1);
     setTextContent(generatedHTML);
@@ -156,15 +157,10 @@ function Home() {
   }, [text]);
 
   useEffect(() => {
-    console.log('Content', textContent);
-    console.log('Updates', updates);
 
     if (updates && updates.length > 0) {
 
       let spans = React.Children.toArray(textContent);
-      console.log('Spans', spans)
-
-      console.log(textContent);
 
       updates.forEach(updateIndex => {
         const newSpan = React.cloneElement(spans[updateIndex.index], { className: `${spans[updateIndex.index].props.className} ${updateIndex.textUnderlineClass}`});
@@ -210,8 +206,8 @@ function Home() {
         )}
         {quote && (
           <div>
-            <h3>Highlighted Quote</h3>
             <p>Text highlighting is based on word uniqueness, something you can read more about in the info page.</p>
+            {label && <p>{label}</p>}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={apiRequest}>
             Check Quote
