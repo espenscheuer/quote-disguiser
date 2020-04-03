@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import ReactGA from 'react-ga';
 import './App.css';
 import {Link} from 'react-router-dom'
 import uniqid from 'uniqid';

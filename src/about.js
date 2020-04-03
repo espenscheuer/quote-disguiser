@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactGA from 'react-ga';
 import './App.css';
 import {Link} from 'react-router-dom'
 
