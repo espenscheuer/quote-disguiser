@@ -43,11 +43,13 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
+    let diff = Math.abs(original.length - text.length)
+    console.log(diff)
     setFound('');
     ReactGA.event({
       category: "Check Text",
       action: "User Checked Text",
-      value: Math.abs(original.length - text.length)
+      value: diff
     });
 		const response = await fetch('/api/', {
 			method: 'POST',
