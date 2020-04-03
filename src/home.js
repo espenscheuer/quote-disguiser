@@ -22,6 +22,10 @@ function Home() {
   const twogram = require('./2_gram_json.json');
 
   const changeBtn = () => {
+    ReactGA.event({
+      category: "Set Orignal",
+      action: "User Set Original Text",
+    });
     setText(original)
 		if(!quote) {
       setBtnText("Edit Quote")
