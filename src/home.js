@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import uniqid from 'uniqid';
 
 function Home() {
+    ReactGA.initialize('UA-162759087-1');
+    ReactGA.pageview('/home');
     const [text, setText] = useState('');
     const [original, setOriginal] = useState('');
     const [quote, setQuote] = useState(false)

@@ -9,8 +9,6 @@ import {BrowserRouter, Route} from 'react-router-dom'
 
 
 function App() {
-  ReactGA.initialize('UA-162759087-1');
-  ReactGA.pageview('/homepage');
 
 	return (
     <BrowserRouter>
