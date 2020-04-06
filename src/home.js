@@ -25,7 +25,7 @@ function Home() {
     ReactGA.event({
       category: "Set Original",
       action: "User Set Original Text",
-      value: 1
+      value: 0
     });
     setText(original)
 		if(!quote) {
@@ -50,7 +50,7 @@ function Home() {
     ReactGA.event({
       category: "Check Text",
       action: "User Checked Text",
-      value: diff
+      value: 2
     });
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -116,7 +116,7 @@ function Home() {
       ReactGA.event({
         category: "Edit Text",
         action: "User Edited Text",
-        value : 1
+        value : 2
       });
     }
     let generatedHTML = [];
