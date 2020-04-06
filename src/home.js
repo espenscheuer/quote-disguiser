@@ -214,7 +214,7 @@ function Home() {
         </div>
       {quote && (
           <div>
-            <p>Now substitute synonyms for the most identifiable words (in red) and check to see if the original quote appears in a google search.</p>
+            <p>Now substitute synonyms for a few of the most identifiable words (in red) and see if the original quote appears in a google search.</p>
             <textarea className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
