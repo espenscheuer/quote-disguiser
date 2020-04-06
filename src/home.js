@@ -112,11 +112,13 @@ function Home() {
   
   
   useEffect(() => {
-    ReactGA.event({
-      category: "Edit Text",
-      action: "User Edited Text",
-      value : 1
-    });
+    if(quote){
+      ReactGA.event({
+        category: "Edit Text",
+        action: "User Edited Text",
+        value : 1
+      });
+    }
     let generatedHTML = [];
     let updatingIndexes = [];
     let words = text.split(' ');
