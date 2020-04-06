@@ -25,7 +25,6 @@ function Home() {
     ReactGA.event({
       category: "Set Original",
       action: "User Set Original Text",
-      value: 0
     });
     setText(original)
 		if(!quote) {
@@ -115,8 +114,7 @@ function Home() {
     if(quote){
       ReactGA.event({
         category: "Edit Text",
-        action: "User Edited Text",
-        value : 1
+        action: "User Edited Text"
       });
     }
     let generatedHTML = [];
