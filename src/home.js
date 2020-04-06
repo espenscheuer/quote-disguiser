@@ -127,7 +127,6 @@ function Home() {
       let textUnderlineClass = '';
 
       let included = original.includes(word)
-      included = true;
       let test = word.toLowerCase();
       test = test.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ")
 
@@ -215,7 +214,7 @@ function Home() {
         </div>
       {quote && (
           <div>
-            <p>Now edit the quote, prioritizing the most unique words (in red) and check to see if the original quote appears in a google search.</p>
+            <p>Now substitutesynonyms for the most identifiable words (in red) and check to see if the original quote appears in a google search.</p>
             <textarea className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
