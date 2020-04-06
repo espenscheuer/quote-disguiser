@@ -50,7 +50,7 @@ function Home() {
     ReactGA.event({
       category: "Check Text",
       action: "User Checked Text",
-      value: 2
+      value: diff
     });
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -116,7 +116,7 @@ function Home() {
       ReactGA.event({
         category: "Edit Text",
         action: "User Edited Text",
-        value : 2
+        value : 1
       });
     }
     let generatedHTML = [];
