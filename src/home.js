@@ -169,7 +169,7 @@ function Home() {
       }
 
       const classNames = `${textColorClass} ${textUnderlineClass}`;
-      generatedHTML.push(<span key={id} onMouseEnter={() => {createLabel(word, classNames)}} className={classNames}>{word} </span>);
+      generatedHTML.push(<span key={id} onMouseEnter={() => {createLabel(word.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " "), classNames)}} className={classNames}>{word} </span>);
     });
     setVersion(version+1);
     setTextContent(generatedHTML);
