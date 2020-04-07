@@ -43,8 +43,7 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
-    let diff = Math.abs(original.length - text.length)
-    console.log(diff)
+    let diff = findDiff(text, original)
     setFound('');
     ReactGA.event({
       category: "Check Text",
@@ -108,6 +107,15 @@ function Home() {
       setLabel(word + ": very rare")
     }
   };
+
+  function findDiff(str1, str2){ 
+    let diff= "";
+    str2.split('').forEach(function(val, i){
+      if (val !== str1.charAt(i))
+        diff += val ;         
+    });
+    return diff;
+  }
   
   
   useEffect(() => {
