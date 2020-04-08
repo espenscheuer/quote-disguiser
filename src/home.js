@@ -22,9 +22,11 @@ function Home() {
   const twogram = require('./2_gram_json.json');
 
   const changeBtn = () => {
+    let val = original.length
     ReactGA.event({
       category: "Set Original",
       action: "User Set Original Text",
+      value : val
     });
     setText(original)
 		if(!quote) {
@@ -119,12 +121,6 @@ function Home() {
   
   
   useEffect(() => {
-    if(quote){
-      ReactGA.event({
-        category: "Edit Text",
-        action: "User Edited Text"
-      });
-    }
     let generatedHTML = [];
     let updatingIndexes = [];
     let words = text.split(' ');
