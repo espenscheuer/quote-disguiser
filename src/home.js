@@ -23,14 +23,14 @@ function Home() {
 
   const changeBtn = () => {
     let val = original.length
-    ReactGA.event({
-      category: "Set Original",
-      action: "User Set Original Text",
-      value : val
-    });
     setText(original)
 		if(!quote) {
       setBtnText("Edit Quote")
+      ReactGA.event({
+        category: "Set Original",
+        action: "User Set Original Text",
+        value : val
+      });
     } else {
       setBtnText("Set Quote")
     }
