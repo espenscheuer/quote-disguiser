@@ -22,6 +22,13 @@ function Home() {
   const onegram = require('./1_gram_json.json');
   const twogram = require('./2_gram_json.json');
 
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.addEventListener('scroll', (e) => {
+      setLabel('');
+    })
+  });
+
   const changeBtn = () => {
     let val = original.length
     setText(original)
@@ -101,7 +108,7 @@ function Home() {
   };
 
   const createLabel = (word, classNames, el) => {
-    setOffset({"top" : el.getBoundingClientRect().top,"left": el.getBoundingClientRect().left}) 
+    setOffset({"top" : el.getBoundingClientRect().top,"left": el.getBoundingClientRect().left, "width" : el.getBoundingClientRect().width}) 
     if(classNames.includes(textClasses.gray)){
       setLabel("common")
     } else if(classNames.includes(textClasses.orange)){
@@ -243,7 +250,7 @@ function Home() {
   }, [textContent, updates]);
 
     return (
-        <div>
+        <div className>
         <p>
           Enter the quote you would like to obfuscate.
         </p>
@@ -275,7 +282,7 @@ function Home() {
         {quote && (
           <div>
             <p>Text highlighting is based on word uniqueness, something you can read more about in the info page.</p>
-            {label && <div className = "hover" style={{ "top" : offset.top - 35,"left": offset.left - 20}}>{label}</div>}
+            {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left)}}>{label}</div>}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={apiRequest}>
             Check Quote

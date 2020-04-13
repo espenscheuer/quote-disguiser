@@ -78,7 +78,7 @@ blockquote {
 }
 
 .hover{
-	position: absolute;
+	position: fixed;
 	width: fit-content;
 	padding: 5px;
 	z-index: 1;
