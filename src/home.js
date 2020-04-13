@@ -270,7 +270,7 @@ function Home() {
         </div>
       {quote && (
           <div>
-            <p>Now substitute synonyms for a few of the most identifiable words (in red) and see if the original quote appears in a google search.</p>
+            <p>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search.</p>
             <textarea className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
@@ -281,7 +281,7 @@ function Home() {
         )}
         {quote && (
           <div>
-            <p>Text highlighting is based on word uniqueness, something you can read more about in the info page.</p>
+            <p>Text highlighting is based on word uniqueness from common (gray) to very rare (red). </p>
             {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left)}}>{label}</div>}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={apiRequest}>
@@ -291,7 +291,7 @@ function Home() {
         )}
         {found && quote && (
           <div className="found">
-            <h3>Google Result</h3>
+            <h3>Google Results</h3>
             {google && <p>The original quote appeared on the first page of a google search</p>}
             {!google && <p>The original quote did not appear on the first page of a google search</p> }
             {found}
