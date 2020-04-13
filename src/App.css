@@ -77,6 +77,16 @@ blockquote {
 	
 }
 
+.hover{
+	position: absolute;
+	width: fit-content;
+	padding: 5px;
+	z-index: 1;
+	background-color: #FFFEC2;
+	border: 2px solid #A1A1A1;
+	border-radius: 5px;
+}
+
 blockquote p {
 	display: inline;
 }
