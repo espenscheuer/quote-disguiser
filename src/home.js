@@ -282,7 +282,7 @@ function Home() {
         {quote && (
           <div>
             <p>Text highlighting is based on word uniqueness from common(gray) to very rare (red). </p>
-            {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - label.length * 4.1)}}>{label}</div>}
+            {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - (label.length * 3.3 + 10))}}>{label}</div>}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={apiRequest}>
             Check Quote
