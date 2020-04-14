@@ -108,7 +108,6 @@ function Home() {
   };
 
   const createLabel = (word, classNames, el) => {
-    setOffset({"top" : el.getBoundingClientRect().top,"left": el.getBoundingClientRect().left, "width" : el.getBoundingClientRect().width}) 
     if(classNames.includes(textClasses.gray)){
       setLabel("common")
     } else if(classNames.includes(textClasses.orange)){
@@ -120,6 +119,7 @@ function Home() {
     } else { 
       setLabel("not in original")
     }
+    setOffset({"top" : el.getBoundingClientRect().top,"left": el.getBoundingClientRect().left, "width" : el.getBoundingClientRect().width}) 
   };
 
   function findDiff(s, t) {
@@ -281,8 +281,8 @@ function Home() {
         )}
         {quote && (
           <div>
-            <p>Text highlighting is based on word uniqueness from common (gray) to very rare (red). </p>
-            {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left)}}>{label}</div>}
+            <p>Text highlighting is based on word uniqueness from common(gray) to very rare (red). </p>
+            {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - label.length * 4.1)}}>{label}</div>}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={apiRequest}>
             Check Quote
