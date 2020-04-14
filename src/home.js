@@ -109,7 +109,7 @@ function Home() {
 
   const createLabel = (word, classNames, el) => {
     if(classNames.includes(textClasses.gray)){
-      setLabel("common")
+      setLabel(" common ")
     } else if(classNames.includes(textClasses.orange)){
       setLabel("uncommon")
     } else if(classNames.includes(textClasses.darkOrange)){
