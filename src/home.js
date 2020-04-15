@@ -215,6 +215,10 @@ function Home() {
             textUnderlineClass = textClasses.uRed;
           }
 
+          if(index % 2 === 0) {
+            textUnderlineClass = `${textUnderlineClass}1`
+          }
+
           updatingIndexes.push({
             index: indexToUpdate,
             textUnderlineClass,
@@ -236,9 +240,9 @@ function Home() {
     if (updates && updates.length > 0) {
 
       let spans = React.Children.toArray(textContent);
-
       updates.forEach(updateIndex => {
         const newSpan = React.cloneElement(spans[updateIndex.index], { className: `${spans[updateIndex.index].props.className} ${updateIndex.textUnderlineClass}`});
+        console.log(newSpan.props)
         spans[updateIndex.index] = newSpan;
       });
 
@@ -281,7 +285,7 @@ function Home() {
         )}
         {quote && (
           <div>
-            <p>Text highlighting is based on word uniqueness from common(gray) to very rare (red). </p>
+            <p>Text highlighting is based on word uniqueness from common (gray) to very rare (red). </p>
             {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - (label.length * 3.3 + 10))}}>{label}</div>}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={apiRequest}>
