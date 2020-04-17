@@ -56,11 +56,7 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
-    setText(text.trim().replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, ""))
-    setOriginal(original.trim().replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, ""))
-    console.log(original)
     let diff = findDiff(text, original)
-    console.log(diff)
     setFound('');
     ReactGA.event({
       category: "Check Text",
