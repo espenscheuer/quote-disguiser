@@ -3,6 +3,8 @@ import ReactGA from 'react-ga';
 import './App.css';
 import {Link} from 'react-router-dom'
 import uniqid from 'uniqid';
+import ClearIcon from '@material-ui/icons/Clear';
+import CheckIcon from '@material-ui/icons/Check';
 
 function Home() {
   ReactGA.initialize('UA-162759087-1');
@@ -34,6 +36,7 @@ function Home() {
     setText(original)
 		if(!quote) {
       setBtnText("Edit Quote")
+      apiRequest()
       ReactGA.event({
         category: "Set Original",
         action: "User Set Original Text",
@@ -76,7 +79,6 @@ function Home() {
         setGoogle(true)
 				setFound(
 					<>
-						<blockquote>{value}</blockquote>
 						<iframe
 							src={`https://google.com/search?igu=1&q="${escape(text)}"`}
 							title="Search results"
@@ -175,7 +177,7 @@ function Home() {
   useEffect(() => {
     let generatedHTML = [];
     let updatingIndexes = [];
-    let words = text.split(' ');
+    let words = text.trim().split(' ');
     words.forEach((word, index) => {
       const id = uniqid();
 
@@ -242,7 +244,6 @@ function Home() {
       let spans = React.Children.toArray(textContent);
       updates.forEach(updateIndex => {
         const newSpan = React.cloneElement(spans[updateIndex.index], { className: `${spans[updateIndex.index].props.className} ${updateIndex.textUnderlineClass}`});
-        console.log(newSpan.props)
         spans[updateIndex.index] = newSpan;
       });
 
@@ -274,7 +275,7 @@ function Home() {
         </div>
       {quote && (
           <div>
-            <p>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search.</p>
+            <p>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search. Text highlighting is based on word uniqueness from common (gray) to very rare (red).</p>
             <textarea className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
@@ -285,8 +286,22 @@ function Home() {
         )}
         {quote && (
           <div>
-            <p>Text highlighting is based on word uniqueness from common (gray) to very rare (red). </p>
             {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - (label.length * 3.3 + 10))}}>{label}</div>}
+            
+            {found && quote && (
+              <div>
+                {google && 
+                <div className = "msg">
+                  <ClearIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#FA4659" }} />
+                  <p> Keep Editing! The original quote appeared on the first page of a google search</p>
+                </div>}
+                {!google && 
+                <div className = "msg">
+                  <CheckIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#2EB872" }} />
+                  <p> You're good! The original quote did not appear on the first page of a google search</p> 
+                  </div>}
+              </div>
+            )}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={apiRequest}>
             Check Quote
@@ -295,9 +310,7 @@ function Home() {
         )}
         {found && quote && (
           <div className="found">
-            <h3>Google Results</h3>
-            {google && <p>The original quote appeared on the first page of a google search</p>}
-            {!google && <p>The original quote did not appear on the first page of a google search</p> }
+            <br></br>
             {found}
           </div>
         )}

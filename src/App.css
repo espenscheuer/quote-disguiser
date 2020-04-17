@@ -24,7 +24,7 @@ textarea {
 	border: 1px solid #ddd;
 	border-radius: .5em;
 	font: inherit;
-	height: 8rem;
+	height: 9rem;
 	margin: 0 0 1em;
 	max-width: 540px;
 	padding: 1em;
@@ -75,6 +75,13 @@ blockquote {
 	width: calc(100% - 1rem);
 
 	
+}
+
+.msg{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .hover{
