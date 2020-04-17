@@ -8,6 +8,11 @@ html {
 	font-size: 62.5%;
 }
 
+h1{
+	margin-top: .3em;
+	margin-bottom: .3em;
+}
+
 .header-link {
   color: black;
 }

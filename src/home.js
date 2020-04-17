@@ -56,8 +56,9 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
-    setText(text.trim())
-    setOriginal(original.trim())
+    setText(text.trim().replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, ""))
+    setOriginal(original.trim().replace(/(^\s*(?!.+)\n+)|(\n+\s+(?!.+)$)/g, ""))
+    console.log(original)
     let diff = findDiff(text, original)
     console.log(diff)
     setFound('');
@@ -257,7 +258,7 @@ function Home() {
   }, [textContent, updates]);
 
     return (
-        <div className>
+        <div>
         <p>
           Enter the quote you would like to obfuscate.
         </p>
@@ -277,7 +278,9 @@ function Home() {
         </div>
       {quote && (
           <div>
+            <br></br>
             <p>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search. Text highlighting is based on word uniqueness from common (gray) to very rare (red).</p>
+            <br></br>
             <textarea className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
