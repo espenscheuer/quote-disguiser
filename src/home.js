@@ -56,6 +56,8 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
+    setText(text.trim())
+    setOriginal(original.trim())
     let diff = findDiff(text, original)
     console.log(diff)
     setFound('');
