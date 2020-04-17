@@ -64,13 +64,14 @@ function Home() {
       action: "User Checked Text",
       value: diff
     });
+    let new = original.trim()
 		const response = await fetch('/api/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				original,
+				original : new,
 				text,
 			}),
 		});
