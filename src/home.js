@@ -32,6 +32,7 @@ function Home() {
   });
 
   const changeBtn = () => {
+    setOriginal(original.trim())
     let val = original.length
     setText(original)
 		if(!quote) {
