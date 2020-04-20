@@ -57,13 +57,7 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
-    let diff = findDiff(text, original)
     setFound('');
-    ReactGA.event({
-      category: "Check Text",
-      action: "User Checked Text",
-      value: diff
-    });
     let trimmed = original.trim()
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -282,6 +276,12 @@ function Home() {
             <textarea className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
+                let diff = findDiff(text, original)
+                ReactGA.event({
+                  category: "Check Text",
+                  action: "User Checked Text",
+                  value: diff
+                });
                 apiRequest()
               }
             }}/>
@@ -306,7 +306,15 @@ function Home() {
               </div>
             )}
             <blockquote>{textContent}</blockquote>
-            <button className="button" onClick={apiRequest}>
+            <button className="button" onClick={() => {
+              let diff = findDiff(text, original)
+              ReactGA.event({
+                category: "Check Text",
+                action: "User Checked Text",
+                value: diff
+              });
+              apiRequest()
+            }}>
             Check Quote
             </button>
           </div>
