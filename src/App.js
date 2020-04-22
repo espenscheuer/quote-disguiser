@@ -13,13 +13,13 @@ function App() {
     <BrowserRouter>
         <Helmet>
           <html lang="en" />
-          <title>HCDE Quote Anonymizer</title>
+          <title>Quote Anonymizer</title>
           <meta name="robots" content="noindex, nofollow" />
         </Helmet>
         <div className = 'content'>
           <div className = "header">
             <h1>
-              HCDE Quote Anonymizer
+              Quote Anonymizer
             </h1>
             <div className = "link-wrap">
               
