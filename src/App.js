@@ -13,13 +13,13 @@ function App() {
     <BrowserRouter>
         <Helmet>
           <html lang="en" />
-          <title>Differential Privacy Checker</title>
+          <title>HCDE Quote Anonymizer</title>
           <meta name="robots" content="noindex, nofollow" />
         </Helmet>
         <div className = 'content'>
           <div className = "header">
             <h1>
-              Differential Privacy
+              HCDE Quote Anonymizer
             </h1>
             <div className = "link-wrap">
               
