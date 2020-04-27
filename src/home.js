@@ -7,7 +7,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/Check';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
 function Home() {
   ReactGA.initialize('UA-162759087-1');
   ReactGA.pageview('/home');
@@ -273,7 +272,8 @@ function Home() {
             {btnText}
           </button>
         </div>
-      {quote && (
+      {loading && <CircularProgress/>}
+      {quote && found && !loading && (
           <div>
             <br></br>
             <p>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search. Text highlighting is based on word uniqueness from common (gray) to very rare (red).</p>
@@ -298,7 +298,6 @@ function Home() {
             
             {quote && (
               <div>
-                {loading && <CircularProgress />}
                 {google && 
                 <div className = "msg">
                   <ClearIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#FA4659" }} />
