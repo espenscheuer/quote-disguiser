@@ -20,6 +20,7 @@ function Home() {
   const [updates, setUpdates] = useState(null);
   const [label, setLabel] = useState('');
   const [offset, setOffset] = useState({});
+  const [loading, setLoading] = useState(false)
 
   const onegram = require('./1_gram_json.json');
   const twogram = require('./2_gram_json.json');
@@ -57,6 +58,7 @@ function Home() {
 	};
 
 	const apiRequest = async() => {
+    setLoading(true)
     setFound('');
     let trimmed = original.trim()
 		const response = await fetch('/api/', {
@@ -89,7 +91,8 @@ function Home() {
 					/>
 				);
 			}
-		});
+    });
+    setLoading(false)
   };
   
   const textClasses = {
@@ -293,6 +296,7 @@ function Home() {
             
             {found && quote && (
               <div>
+                {loading && <div>loading</div>}
                 {google && 
                 <div className = "msg">
                   <ClearIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#FA4659" }} />
