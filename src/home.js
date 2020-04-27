@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom'
 import uniqid from 'uniqid';
 import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/Check';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 function Home() {
   ReactGA.initialize('UA-162759087-1');
@@ -294,9 +296,9 @@ function Home() {
           <div>
             {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - (label.length * 3.3 + 10))}}>{label}</div>}
             
-            {found && quote && (
+            {quote && (
               <div>
-                {loading && <div>loading</div>}
+                {loading && <CircularProgress />}
                 {google && 
                 <div className = "msg">
                   <ClearIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#FA4659" }} />
