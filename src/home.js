@@ -306,7 +306,9 @@ function Home() {
             </button>
             {loading && (
             <div>
+              <br/>
               <CircularProgress/>
+              <br/>
             </div>
             )}
             {quote && !loading && (
