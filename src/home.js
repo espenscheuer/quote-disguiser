@@ -272,12 +272,19 @@ function Home() {
             {btnText}
           </button>
         </div>
-      {loading && <CircularProgress/>}
+      
+        {loading && (
+        <div>
+          <br/>
+          <CircularProgress/>
+          <br/>
+        </div>
+        )}
+     
       {quote && found && !loading && (
+        <div>
           <div>
-            <br></br>
             <p>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search. Text highlighting is based on word uniqueness from common (gray) to very rare (red).</p>
-            <br></br>
             <textarea className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
@@ -290,10 +297,6 @@ function Home() {
                 apiRequest()
               }
             }}/>
-          </div>
-        )}
-        {quote && (
-          <div>
             {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - (label.length * 3.3 + 10))}}>{label}</div>}
             
             {quote && (
@@ -323,16 +326,15 @@ function Home() {
             Check Quote
             </button>
           </div>
-        )}
-        {found && quote && (
           <div className="found">
             <br></br>
             {found}
           </div>
+        </div>
         )}
         <br></br>
         <Link className = 'header-link' to ='/about'>read more about the tool </Link>
-        </div>
+      </div>
     )
 }
 
