@@ -256,37 +256,29 @@ function Home() {
 
     return (
         <div>
-        <p>
-          Enter the quote you would like to obfuscate.
-        </p>
         <div className="input"> 
-        {!quote && <textarea className="text-input" value={original} 
-        onChange={(e) => {setOriginal(e.target.value); setText(e.target.value)}}
-        onKeyPress={e => {
-          if(e.key==='Enter'){
-            changeBtn()
-          }
-        }} />}
-        {quote && <blockquote>{original}</blockquote>}
-          <button type = "primary" pressed = {btnText}
-            onClick={changeBtn}>
-            {btnText}
-          </button>
+          <p style ={{marginBlockStart :"1em", marginBlockEnd :"1em"}}>
+            Enter the quote you would like to obfuscate.
+          </p>
+          {!quote && <textarea className="text-input" value={original} 
+          onChange={(e) => {setOriginal(e.target.value); setText(e.target.value)}}
+          onKeyPress={e => {
+            if(e.key==='Enter'){
+              changeBtn()
+            }
+          }} />}
+          {quote && <blockquote>{original}</blockquote>}
+            <button type = "primary" pressed = {btnText}
+              onClick={changeBtn}>
+              {btnText}
+            </button>
         </div>
-      
-        {loading && (
-        <div>
-          <br/>
-          <CircularProgress/>
-          <br/>
-        </div>
-        )}
      
-      {quote && found && !loading && (
+      {quote && (
         <div>
           <div>
-            <p>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search. Text highlighting is based on word uniqueness from common (gray) to very rare (red).</p>
-            <textarea className="text-input" value={text} onChange={updateText} 
+            <p style ={{marginBlockStart :"1.75em", marginBlockEnd :"1.75em"}}>Now substitute synonyms for a few unique words (in red) and see if the quote still appears in a google search. Text highlighting is based on word uniqueness from common (gray) to very rare (red).</p>
+            <textarea style ={{marginBottom: 0}}className="text-input" value={text} onChange={updateText} 
             onKeyPress={e => {
               if(e.key==='Enter'){
                 let diff = findDiff(text, original)
@@ -300,20 +292,6 @@ function Home() {
             }}/>
             {label && <div className = "hover" style={{"top" : offset.top - 35,"left": (offset.left + offset.width/2 - (label.length * 3.3 + 10))}}>{label}</div>}
             
-            {quote && (
-              <div>
-                {google && 
-                <div className = "msg">
-                  <ClearIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#FA4659" }} />
-                  <p> Keep Editing! The original quote appeared on the first page of a google search</p>
-                </div>}
-                {!google && 
-                <div className = "msg">
-                  <CheckIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#2EB872" }} />
-                  <p> You're good! The original quote did not appear on the first page of a google search</p> 
-                  </div>}
-              </div>
-            )}
             <blockquote>{textContent}</blockquote>
             <button className="button" onClick={() => {
               let diff = findDiff(text, original)
@@ -326,10 +304,29 @@ function Home() {
             }}>
             Check Quote
             </button>
-          </div>
-          <div className="found">
-            <br></br>
-            {found}
+            {loading && (
+            <div>
+              <CircularProgress/>
+            </div>
+            )}
+            {quote && !loading && (
+              <div>
+                {google && 
+                <div className = "msg" style={{marginTop:20}}>
+                  <ClearIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#FA4659" }} />
+                  <p style ={{marginBlockStart :".5em", marginBlockEnd :".5em"}}> Keep Editing! The original quote appeared on the first page of a google search</p>
+                </div>}
+                {!google && 
+                <div className = "msg">
+                  <CheckIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#2EB872" }} />
+                  <p style ={{marginBlockStart :".5em", marginBlockEnd :".5em"}}> You're good! The original quote did not appear on the first page of a google search</p> 
+                  </div>}
+                  <div className="found">
+                    <br></br>
+                    {found}
+                  </div>
+              </div>
+            )}
           </div>
         </div>
         )}
