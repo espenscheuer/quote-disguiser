@@ -61,6 +61,7 @@ function Home() {
 	const apiRequest = async() => {
     setLoading(true)
     setFound('');
+    setOriginal(original + " ")
     let trimmed = original.trim()
 		const response = await fetch('/api/', {
 			method: 'POST',
