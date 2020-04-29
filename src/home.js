@@ -61,7 +61,6 @@ function Home() {
 	const apiRequest = async() => {
     setLoading(true)
     setFound('');
-    setOriginal(original + " ")
     let trimmed = original.trim()
 		const response = await fetch('/api/', {
 			method: 'POST',
@@ -319,7 +318,7 @@ function Home() {
                   <p style ={{marginBlockStart :".5em", marginBlockEnd :".5em"}}> Keep Editing! The original quote appeared on the first page of a google search</p>
                 </div>}
                 {!google && 
-                <div className = "msg">
+                <div className = "msg" style={{marginTop:20}}>
                   <CheckIcon style={{height : "30px", width: "30px", marginRight: "10px", color: "#2EB872" }} />
                   <p style ={{marginBlockStart :".5em", marginBlockEnd :".5em"}}> You're good! The original quote did not appear on the first page of a google search</p> 
                   </div>}
